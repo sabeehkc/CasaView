@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { navLinks } from "../assets/data";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pathname = location.pathname;
+  console.log(pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,9 +45,11 @@ const NavBar = () => {
         {navLinks.map((link) => (
           <li key={link.id}>
             <a
-              href={link.url}
+              onClick={() => navigate(link.url)}
               className={`text-lg font-normal  transition-colors duration-200 ${
-                link.title === "Home"
+                link.title === "Home" && pathname === "/"
+                  ? "text-pink-400"
+                  : pathname === link.url
                   ? "text-pink-400"
                   : "text-black hover:text-pink-400"
               }`}

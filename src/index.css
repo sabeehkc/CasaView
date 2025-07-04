@@ -27,3 +27,11 @@ body {
 .animate-fadeInUp {
   animation: fadeInUp 0.8s ease-out both;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; 
+}

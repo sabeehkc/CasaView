@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="bg-white border-t border-gray-100 pt-12 pb-6 px-4 md:px-0">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 text-left">
+      <div className="max-w-7xl mx-auto grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 text-left">
         {/* Uptown */}
         <div>
           <h3 className="font-bold font-serif text-lg mb-4">CasaView</h3>
@@ -11,13 +11,13 @@ const Footer = () => {
           <div className="flex space-x-4 mt-4">
             {/* Social Icons */}
             <a href="#" aria-label="Twitter" className="text-pink-400 hover:text-pink-600">
-            <i class="fa-brands fa-x-twitter text-pink-400"></i>
+            <i className="fa-brands fa-x-twitter text-pink-400"></i>
             </a>
             <a href="#" aria-label="Facebook" className="text-pink-400 hover:text-pink-600">
-            <i class="fa-brands fa-facebook-f text-pink-400"></i>
+            <i className="fa-brands fa-facebook-f text-pink-400"></i>
             </a>
             <a href="#" aria-label="Instagram" className="text-pink-400 hover:text-pink-600">
-            <i class="fa-brands fa-instagram " ></i>
+            <i className="fa-brands fa-instagram " ></i>
             </a>
           </div>
         </div>
@@ -59,7 +59,7 @@ const Footer = () => {
               <span>203 Fake St. Mountain View, San Francisco, California, USA</span>
             </li>
             <li className="flex items-center space-x-2">
-            <i class="fa-solid fa-phone text-pink-400"></i>
+            <i className="fa-solid fa-phone text-pink-400"></i>
               <a href="tel:+23923929210" className="hover:text-pink-400 transition">+2 392 3929 210</a>
             </li>
             <li className="flex items-center space-x-2">
