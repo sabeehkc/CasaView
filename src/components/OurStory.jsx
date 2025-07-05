@@ -14,13 +14,17 @@ const OurStory = ({ itsHome }) => {
     triggerOnce: true,
     threshold: 0.15,
   });
+  const [ref1, inView1] = useInView({
+    triggerOnce: true,
+    threshold: 0.15,
+  });
   return (
     <section className="w-full  py-16">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 px-6">
         {/* Left: Text */}
         <div
           className={`flex-1 ${
-            inView ? "animate-fadeInUp" : "opacity-0 translate-y-10"
+            inView ? "animate-fadeInUp" : ""
           }`}
           ref={ref}
         >
@@ -69,9 +73,9 @@ const OurStory = ({ itsHome }) => {
         {/* Right: Image */}
         <div
           className={`flex-1  justify-center hidden sm:block ${
-            inView ? "animate-fadeInUp" : "opacity-0 translate-y-10"
+            inView1 ? "animate-fadeInUp" : ""
           }`}
-          ref={ref}
+          ref={ref1}
         >
           <img
             src={aboutImage}

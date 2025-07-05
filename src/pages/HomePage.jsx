@@ -5,6 +5,7 @@ import Services from '../components/Services'
 import Footer from '../components/Footer'
 import ShortProperties from '../components/ShortProperties'
 import OurStory from '../components/OurStory'
+import Testimonial from '../components/Testimonial'
 
 
 const HomePage = () => {
@@ -15,6 +16,7 @@ const HomePage = () => {
       <Services />
       <ShortProperties />
       <OurStory itsHome={true} />
+      <Testimonial />
       <Footer />
     </div>
   )

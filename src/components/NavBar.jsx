@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { navLinks } from "../assets/data";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -11,6 +10,8 @@ const NavBar = () => {
   const location = useLocation();
   const pathname = location.pathname;
   console.log(pathname);
+  const hasNumberInPath = pathname.includes("/property/");
+  console.log(hasNumberInPath);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,13 +27,16 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-30 transition-all duration-300 ${scrolled ? "bg-gray-200 shadow-md opacity-90" : ""}
+      className={`fixed top-0 left-0 w-full z-30 transition-all duration-300 ${
+        scrolled ? "bg-gray-200 shadow-md opacity-90" : ""
+      }
        py-6 px-4 md:px-16 flex items-center justify-between border-0`}
-       style={
+      style={
         scrolled
           ? {}
           : {
-              background: "linear-gradient(0deg,rgba(247, 247, 247, 0) 0%, rgba(255, 255, 255, 1) 100%)",
+              background:
+                "linear-gradient(0deg,rgba(247, 247, 247, 0) 0%, rgba(255, 255, 255, 1) 100%)",
             }
       }
     >
@@ -42,14 +46,14 @@ const NavBar = () => {
       </div>
       {/* Desktop Nav */}
       <ul className="hidden md:flex gap-10 items-center mr-20">
-        {navLinks.map((link) => (
+        {navLinks?.map((link) => (
           <li key={link.id}>
             <a
               onClick={() => navigate(link.url)}
               className={`text-lg font-normal  transition-colors duration-200 ${
                 link.title === "Home" && pathname === "/"
                   ? "text-pink-400"
-                  : pathname === link.url
+                  : pathname === link.url || (hasNumberInPath && link.title === "Properties")
                   ? "text-pink-400"
                   : "text-black hover:text-pink-400"
               }`}
@@ -92,7 +96,9 @@ const NavBar = () => {
             key={link.id}
             href={link.url}
             className={`text-2xl font-semibold ${
-              link.title === "Home"
+              link.title === "Home" && pathname === "/"
+                ? "text-pink-400"
+                : pathname === link.url 
                 ? "text-pink-400"
                 : "text-black hover:text-pink-400"
             }`}

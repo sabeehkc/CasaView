@@ -1,113 +1,129 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { testimonials } from '../assets/data';
 import { useInView } from 'react-intersection-observer';
-import { FaStar } from 'react-icons/fa';
 
 const Testimonial = () => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.15,
-  });
-
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 });
+  const [ref1, inView1] = useInView({ triggerOnce: true, threshold: 0.15 });
+  const [ref2, inView2] = useInView({ triggerOnce: true, threshold: 0.15 });
   const scrollRef = useRef(null);
-  let interval;
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
+    const cards = container.querySelectorAll('.testimonial-card');
+    if (!cards.length) return;
 
-    const card = container.querySelector('.testimonial-card');
-    if (!card) return;
-
-    let scrollAmount = 0;
-    const scrollStep = card.getBoundingClientRect().width + 24; // 24px = gap
-
-    const startScroll = () => {
-      interval = setInterval(() => {
-        if (
-          container.scrollLeft + container.offsetWidth >=
-          container.scrollWidth - 5
-        ) {
-          container.scrollTo({ left: 0, behavior: 'smooth' });
-          scrollAmount = 0;
-        } else {
-          scrollAmount += scrollStep;
-          container.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+    const autoScroll = () => {
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % testimonials.length;
+        const currentCard = cards[nextIndex];
+        if (currentCard) {
+          const cardRect = currentCard.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
+          const scrollPosition = currentCard.offsetLeft - (containerRect.width - cardRect.width) / 2;
+          container.scrollTo({ left: Math.max(0, scrollPosition), behavior: 'smooth' });
         }
-      }, 2500);
+        return nextIndex;
+      });
     };
-
-    container.addEventListener('mouseenter', () => clearInterval(interval));
-    container.addEventListener('mouseleave', startScroll);
-
-    startScroll();
-
+    const interval = setInterval(autoScroll, 4000);
+    const handleMouseEnter = () => clearInterval(interval);
+    const handleMouseLeave = () => setInterval(autoScroll, 4000);
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
     return () => {
       clearInterval(interval);
-      container.removeEventListener('mouseenter', () => {});
-      container.removeEventListener('mouseleave', () => {});
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, []);
+  }, [testimonials.length]);
 
   return (
-    <section className="py-16" id="testimonials">
+    <section className="py-16 bg-white" id="testimonials">
       <div className="container mx-auto px-4">
         <div
           ref={ref}
-          className={`text-center mb-10 transition-all duration-700 ${
-            inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
+          className={`text-center mb-12 transition-all duration-700 ${inView ? 'animate-fadeInUp' : ''}`}
         >
-          <div className="flex items-center justify-center gap-4">
-            <div className="w-12 h-[1px] bg-pink-400"></div>
-            <span className="text-sm uppercase tracking-widest text-pink-400">
-              Testimonials
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <div className="w-12 h-[1px] bg-gray-200"></div>
+            <span className="text-sm uppercase tracking-widest text-pink-400 font-medium">
+              Testimonial
             </span>
-            <div className="w-12 h-[1px] bg-pink-400"></div>
+            <div className="w-12 h-[1px] bg-gray-200"></div>
           </div>
-          <h2 className="text-4xl font-semibold text-gray-700 mt-2">
-            Happy Clients
+          <h2 className="text-4xl font-semibold text-gray-600 mb-4">
+            What Our Clients Say
           </h2>
         </div>
 
-        {/* Horizontal Scrollable Cards */}
+        {/* Testimonial Cards Container */}
         <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
-          style={{ scrollSnapType: 'x mandatory', scrollBehavior: 'smooth' }}
+          className="flex gap-8 overflow-x-auto pb-8 scrollbar-hide scroll-smooth justify-center "
+          style={{ scrollSnapType: 'x mandatory', scrollBehavior: 'smooth', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {testimonials.map((t) => (
+          {testimonials.map((testimonial, index) => (
             <div
-              key={t.id}
-              className="testimonial-card bg-white rounded-xl shadow-md p-4 sm:p-6 flex flex-col justify-between h-full min-w-[95vw] sm:min-w-[380px] lg:min-w-[420px] transition-transform duration-300 hover:scale-105 hover:shadow-xl flex-shrink-0"
-              style={{ scrollSnapAlign: 'center' }}
+              key={testimonial.id}
+              ref={ref2}
+              className={`testimonial-card ${inView2 ? 'animate-fadeInUp' : ''} bg-white rounded-xl shadow-md p-8 flex flex-col justify-between flex-shrink-0 border border-gray-100`}
+              style={{
+                scrollSnapAlign: 'center',
+                minWidth: '320px',
+                maxWidth: '370px',
+                width: '100%',
+              }}
             >
               {/* Testimonial Text */}
-              <p className="text-gray-600 text-base mb-4 sm:mb-6 italic min-h-[60px]">
-                "{t.text}"
+              <p className="text-gray-700 text-base leading-relaxed mb-6">
+                {testimonial.text}
               </p>
-              {/* Footer: Image + Info */}
-              <div className="flex items-center mt-auto">
+              {/* Client Info */}
+              <div className="flex items-center mt-auto pt-2">
                 <img
-                  src={t.image}
-                  alt={t.name}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-pink-400 mr-4"
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="w-12 h-12 rounded-full object-cover mr-4 border border-gray-200"
                 />
-                <div className="flex-1">
-                  <div className="font-semibold text-gray-900 text-sm">
-                    {t.name}
+                <div>
+                  <div className="font-semibold text-gray-900 text-base">
+                    {testimonial.name}
                   </div>
-                  <div className="text-xs text-gray-400 mb-1">
-                    {t.property}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    {[...Array(t.rating)].map((_, i) => (
-                      <FaStar key={i} className="text-yellow-400 text-xs" />
-                    ))}
+                  <div className="text-sm text-gray-400">
+                    {testimonial.property}
                   </div>
                 </div>
               </div>
             </div>
+          ))}
+        </div>
+
+        {/* Scroll Indicators */}
+        <div className={`flex ${inView1 ? 'animate-fadeInUp' : ''} justify-center items-center gap-2 mt-8`}
+        ref={ref1}
+        >
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                const container = scrollRef.current;
+                if (container) {
+                  const cards = container.querySelectorAll('.testimonial-card');
+                  const currentCard = cards[index];
+                  if (currentCard) {
+                    const cardRect = currentCard.getBoundingClientRect();
+                    const containerRect = container.getBoundingClientRect();
+                    const scrollPosition = currentCard.offsetLeft - (containerRect.width - cardRect.width) / 2;
+                    container.scrollTo({ left: Math.max(0, scrollPosition), behavior: 'smooth' });
+                    setCurrentIndex(index);
+                  }
+                }
+              }}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex ? 'bg-pink-400 scale-125' : 'bg-gray-300 hover:bg-gray-400'}`}
+            />
           ))}
         </div>
       </div>
