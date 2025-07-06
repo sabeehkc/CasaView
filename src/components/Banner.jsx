@@ -65,7 +65,7 @@ const Banner = () => {
                 </p>
                 <button
                   onClick={() => navigate("/properties")}
-                  className="bg-white text-black px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
+                  className="bg-white text-black px-8 py-3 cursor-pointer rounded-lg text-lg font-semibold hover:bg-pink-600 hover:text-white transition-colors"
                 >
                   Explore Properties
                 </button>

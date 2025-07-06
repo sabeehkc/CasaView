@@ -56,7 +56,7 @@ const NavBar = () => {
                   : pathname === link.url || (hasNumberInPath && link.title === "Properties")
                   ? "text-pink-400"
                   : "text-black hover:text-pink-400"
-              }`}
+              } cursor-pointer`}
             >
               {link.title}
             </a>

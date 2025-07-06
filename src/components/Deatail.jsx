@@ -2,11 +2,24 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { properties } from "../assets/data";
 import { FaBed, FaBath, FaRuler } from "react-icons/fa";
+import { useInView } from "react-intersection-observer";
 
 const Deatail = () => {
   const { id } = useParams();
   const property = properties.find((property) => property.id === parseInt(id));
   const [selectedTab, setSelectedTab] = useState("description");
+
+const {ref, inView} = useInView({
+  triggerOnce: true,
+  threshold: 0.15,
+})
+
+const {ref2, inView2} = useInView({
+  triggerOnce: true,
+  threshold: 0.15,
+})
+
+
   if (!property)
     return (
       <div className="text-center py-20 text-gray-500">
@@ -28,7 +41,11 @@ const Deatail = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 mt-20">
       {/* Photos & Gallery */}
-      <div className="flex flex-col md:flex-row gap-8 mb-8">
+      <div
+      ref={ref}
+      className={`flex flex-col md:flex-row gap-8 mb-8 
+      ${inView ? 'animate-fadeInUp' : 'opacity-0 translate-y-10'}
+      `}>
         {/* Main Image */}
         <div className="md:w-2/3 w-full">
           <img
