@@ -26,8 +26,12 @@ const Banner = () => {
   }, []);
 
   const goToSlide = (index) => setCurrentSlide(index);
-  const goToPrevious = () => setCurrentSlide((prev) => (prev - 1 + BannerImages.length) % BannerImages.length);
-  const goToNext = () => setCurrentSlide((prev) => (prev + 1) % BannerImages.length);
+  const goToPrevious = () =>
+    setCurrentSlide(
+      (prev) => (prev - 1 + BannerImages.length) % BannerImages.length
+    );
+  const goToNext = () =>
+    setCurrentSlide((prev) => (prev + 1) % BannerImages.length);
 
   return (
     <div className="relative w-full h-[700px] overflow-hidden mt-0">
@@ -52,16 +56,19 @@ const Banner = () => {
                 }}
               />
             </div>
-            
+
             {/* Dark overlay for text readability */}
             <div className="absolute inset-0 bg-opacity-30"></div>
 
             {/* Content */}
             <div className="absolute inset-0 flex items-center justify-center text-center text-white z-20">
               <div className="px-4">
-                <h1 className="text-5xl md:text-7xl font-bold mb-4">Find Your Dream Home</h1>
+                <h1 className="text-5xl md:text-7xl font-bold mb-4">
+                  Find Your Dream Home
+                </h1>
                 <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
-                  Discover the perfect property that matches your lifestyle and aspirations
+                  Discover the perfect property that matches your lifestyle and
+                  aspirations
                 </p>
                 <button
                   onClick={() => navigate("/properties")}
@@ -98,7 +105,9 @@ const Banner = () => {
             key={index}
             onClick={() => goToSlide(index)}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide ? "bg-white scale-125" : "bg-white bg-opacity-50 hover:bg-opacity-75"
+              index === currentSlide
+                ? "bg-white scale-125"
+                : "bg-white bg-opacity-50 hover:bg-opacity-75"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
