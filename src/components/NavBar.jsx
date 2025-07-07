@@ -41,7 +41,9 @@ const NavBar = () => {
       }
     >
       {/* Logo/Title */}
-      <div className="font-semibold font-serif text-2xl md:text-3xl text-black hover:text-pink-400">
+      <div className="font-semibold font-serif text-2xl md:text-3xl text-black hover:text-pink-400"
+      onClick={() => navigate("/")}
+      >
         CasaView
       </div>
       {/* Desktop Nav */}
