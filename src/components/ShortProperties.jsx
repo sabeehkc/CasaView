@@ -1,5 +1,5 @@
 import React from 'react'
-import { properties } from '../assets/data'
+import { properties } from "../assets/data"
 import Card from './Card'
 import { useInView } from 'react-intersection-observer'
 

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { testimonials } from '../assets/data';
+import { testimonials } from "../assets/data";
 import { useInView } from 'react-intersection-observer';
 
 const Testimonial = () => {
