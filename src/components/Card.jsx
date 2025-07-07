@@ -17,7 +17,6 @@ const Card = ({ property }) => {
       >
         {property.status}
       </span>
-      {/* Image with hover zoom */}
       <div className="overflow-hidden h-56 lg:w-[400px] md:w-[300px] sm:w-[250px]">
         <img
           src={property.image}
@@ -64,7 +63,7 @@ const Card = ({ property }) => {
           {property.location}
         </div>
       </div>
-      {/* Floating Action Button */}
+      {/*Action Button */}
       <button
         className="absolute bottom-5 right-5 bg-gradient-to-tr from-pink-500 to-fuchsia-500 text-white p-3 rounded-full shadow-xl opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300 flex items-center justify-center cursor-pointer"
         onClick={() => navigate(`/property/${property.id}`)}

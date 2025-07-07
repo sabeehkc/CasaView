@@ -4,7 +4,6 @@ const Footer = () => {
   return (
     <footer className="bg-white border-t border-gray-100 pt-12 pb-6 px-4 md:px-0">
       <div className="max-w-7xl mx-auto grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 text-left">
-        {/* Uptown */}
         <div>
           <h3 className="font-bold font-serif text-lg mb-4">CasaView</h3>
           <p className="text-gray-500 mb-4">Far far away, behind the word mountains, far from the countries.</p>

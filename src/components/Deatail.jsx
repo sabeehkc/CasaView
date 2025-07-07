@@ -53,10 +53,7 @@ const {ref2, inView2} = useInView({
             alt={property.name}
             className="w-full h-72 md:h-[400px] object-cover rounded-2xl shadow-lg mb-4"
           />
-          {/* Gallery (if you have more images, add here) */}
-          {/* <div className="flex gap-2 mt-2">
-            <img src={...} ... />
-          </div> */}
+         
         </div>
         {/* Info Card */}
         <div className="md:w-1/3 w-full bg-white rounded-2xl shadow-md p-6 flex flex-col gap-4 border border-gray-100">

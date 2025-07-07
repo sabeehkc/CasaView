@@ -21,7 +21,7 @@ const OurStory = ({ itsHome }) => {
   return (
     <section className="w-full  py-16">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 px-6">
-        {/* Left: Text */}
+      
         <div
           className={`flex-1 ${
             inView ? "animate-fadeInUp" : ""
@@ -70,7 +70,7 @@ const OurStory = ({ itsHome }) => {
             ))}
           </div>
         </div>
-        {/* Right: Image */}
+      
         <div
           className={`flex-1  justify-center hidden sm:block ${
             inView1 ? "animate-fadeInUp" : ""

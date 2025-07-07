@@ -50,7 +50,6 @@ const AllProperties = () => {
     setMaxPrice("");
   };
 
-  // Filter form (shared by sidebar and modal)
   const FilterForm = (
     <div className="flex flex-col gap-5 border-t border-gray-200 pt-4">
       {/* Type */}
@@ -61,7 +60,7 @@ const AllProperties = () => {
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-600"
         >
           <option value="">All</option>
           {types.map((t) => (
@@ -79,7 +78,7 @@ const AllProperties = () => {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-600"
         >
           <option value="">All</option>
           {statuses.map((s) => (
@@ -97,7 +96,7 @@ const AllProperties = () => {
         <select
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-600"
         >
           <option value="">All</option>
           {cities.map((c) => (
@@ -118,14 +117,14 @@ const AllProperties = () => {
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
             placeholder="Min"
-            className="w-1/2 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-1/2 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-600"
           />
           <input
             type="number"
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
             placeholder="Max"
-            className="w-1/2 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-1/2 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-600"
           />
         </div>
       </div>
@@ -134,7 +133,6 @@ const AllProperties = () => {
 
   return (
     <div className="flex flex-col md:flex-row gap-8 max-w-full px-4 sm:px-8 mx-auto mt-20 mb-10">
-      {/* Mobile Filter Button */}
       <div className="md:hidden flex justify-between items-center mb-4 w-full">
         <div className="text-lg font-semibold text-gray-700">All Properties</div>
         <button

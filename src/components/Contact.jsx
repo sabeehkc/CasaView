@@ -36,7 +36,6 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Format message for WhatsApp
     const whatsappMessage = `*New Property Inquiry*
     
 *Name:* ${formData.name}
@@ -49,17 +48,14 @@ ${formData.message}
 ---
 Sent from CasaView Website`;
 
-    // Encode the message for WhatsApp URL
+  
     const encodedMessage = encodeURIComponent(whatsappMessage);
 
     const whatsappNumber = "9778073408"; 
-    // Create WhatsApp URL
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-    // Open WhatsApp
     window.open(whatsappUrl, "_blank");
 
-    // Reset form
     setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
