@@ -27,6 +27,7 @@ const Contact = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState({ type: "", message: "" });
 
   const handleChange = (e) => {
     setFormData({
@@ -38,6 +39,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
   e.preventDefault();
   setIsSubmitting(true);
+  setStatus({ type: "", message: "" });
 
   const accessKey = import.meta.env.VITE_WEB3FORMKEY;
 
@@ -62,7 +64,7 @@ const Contact = () => {
     const result = await response.json();
 
     if (result.success) {
-      alert("Message sent successfully!");
+      setStatus({ type: "success", message: "Message sent successfully!" });
 
       // WhatsApp Message
       const whatsappMessage = `*New Property Inquiry*
@@ -94,11 +96,11 @@ Sent from CasaView Website`;
         message: "",
       });
     } else {
-      alert("Something went wrong!");
+      setStatus({ type: "error", message: result.message || "Something went wrong!" });
     }
   } catch (error) {
     console.log(error);
-    alert("Error sending form");
+    setStatus({ type: "error", message: "Error sending form. Please try again later." });
   } finally {
     setIsSubmitting(false);
   }
@@ -128,6 +130,18 @@ Sent from CasaView Website`;
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">
             Send us a Message
           </h2>
+
+          {status.message && (
+            <div
+              className={`mb-6 p-4 rounded-lg text-sm ${
+                status.type === "success"
+                  ? "bg-green-50 text-green-700 border border-green-200"
+                  : "bg-red-50 text-red-700 border border-red-200"
+              }`}
+            >
+              {status.message}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
