@@ -16,15 +16,17 @@ const Contact = () => {
     message: "",
   });
 
-  const { ref, inView } = useInView({
+  const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.15,
   });
 
-  const { ref2, inView2 } = useInView({
+  const [ref2, inView2] = useInView({
     triggerOnce: true,
     threshold: 0.15,
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -33,11 +35,38 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    const whatsappMessage = `*New Property Inquiry*
-    
+  const accessKey = import.meta.env.VITE_WEB3FORMKEY;
+
+  const formDataToSend = {
+    access_key: accessKey,
+    name: formData.name,
+    email: formData.email,
+    phone: formData.phone,
+    message: formData.message,
+    subject: "New Property Inquiry",
+  };
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formDataToSend),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert("Message sent successfully!");
+
+      // WhatsApp Message
+      const whatsappMessage = `*New Property Inquiry*
+      
 *Name:* ${formData.name}
 *Email:* ${formData.email}
 *Phone:* ${formData.phone || "Not provided"}
@@ -48,16 +77,32 @@ ${formData.message}
 ---
 Sent from CasaView Website`;
 
-  
-    const encodedMessage = encodeURIComponent(whatsappMessage);
+      const encodedMessage = encodeURIComponent(whatsappMessage);
 
-    const whatsappNumber = "9778073408"; 
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+      const whatsappNumber = "919778073408";
 
-    window.open(whatsappUrl, "_blank");
+      window.open(
+        `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+        "_blank"
+      );
 
-    setFormData({ name: "", email: "", phone: "", message: "" });
-  };
+      // Reset Form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } else {
+      alert("Something went wrong!");
+    }
+  } catch (error) {
+    console.log(error);
+    alert("Error sending form");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 mt-20">
@@ -148,9 +193,12 @@ Sent from CasaView Website`;
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-pink-500 to-fuchsia-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-pink-600 hover:to-fuchsia-600 transition-all duration-300 flex items-center justify-center gap-2"
+              disabled={isSubmitting}
+              className={`w-full bg-gradient-to-r from-pink-500 to-fuchsia-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-pink-600 hover:to-fuchsia-600 transition-all duration-300 flex items-center justify-center gap-2 ${
+                isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+              }`}
             >
-              <FaWhatsapp className="text-xl" /> Send via WhatsApp
+              <FaWhatsapp className="text-xl" /> {isSubmitting ? "Sending..." : "Send via WhatsApp"}
             </button>
           </form>
         </div>
